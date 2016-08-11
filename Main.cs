@@ -64,7 +64,7 @@ static class Main
 			DateTime myDate = default(DateTime);
 			using (SqlClient.SqlConnection myConnection = new SqlClient.SqlConnection(this.CONN_STRING)) {
 				myConnection.Open();
-				using (SqlClient.SqlCommand myCommand = new SqlClient.SqlCommand("SELECT\tMAX(Modified_Date) as LastDate FROM tblZendeskTicket WITH(NOLOCK)", myConnection)) {
+				using (SqlClient.SqlCommand myCommand = new SqlClient.SqlCommand("SELECT MAX(Modified_Date) as LastDate FROM tblZendeskTicket WITH(NOLOCK)", myConnection)) {
 					object myResult = myCommand.ExecuteScalar;
 					myDate = myResult == null || object.ReferenceEquals(myResult, DBNull.Value) ? System.DateTime.Today.AddDays(-45) : (DateTime)myCommand.ExecuteScalar;
 				}
@@ -78,7 +78,7 @@ static class Main
 			List<long> myH2O = new List<long>();
 			using (SqlClient.SqlConnection myConnection = new SqlClient.SqlConnection(this.CONN_STRING)) {
 				myConnection.Open();
-				using (SqlClient.SqlCommand myCommand = new SqlClient.SqlCommand("SELECT\tTicket_ID FROM tblZendeskTicket WITH(NOLOCK) WHERE Status IN ('NEW','OPEN')", myConnection)) {
+				using (SqlClient.SqlCommand myCommand = new SqlClient.SqlCommand("SELECT Ticket_ID FROM tblZendeskTicket WITH(NOLOCK) WHERE Status IN ('NEW','OPEN')", myConnection)) {
 					SqlClient.SqlDataReader myReader = myCommand.ExecuteReader();
 					while (myReader.Read) {
 						myH2O.Add(myReader.GetInt64(0));
@@ -123,7 +123,7 @@ static class Main
 			this.TICKET_CACHE_NEW_OPEN = new List<long>();
 			using (SqlClient.SqlConnection myConnection = new SqlClient.SqlConnection(this.CONN_STRING)) {
 				myConnection.Open();
-				using (SqlClient.SqlCommand myCommand = new SqlClient.SqlCommand("SELECT\tTicket_ID, Modified_Date FROM tblZendeskTicket WITH(NOLOCK)", myConnection)) {
+				using (SqlClient.SqlCommand myCommand = new SqlClient.SqlCommand("SELECT Ticket_ID, Modified_Date FROM tblZendeskTicket WITH(NOLOCK)", myConnection)) {
 					SqlClient.SqlDataReader myReader = myCommand.ExecuteReader();
 					while (myReader.Read) {
 						this.TICKET_CACHE.Add(myReader.GetInt64(0), myReader.GetDateTime(1));
