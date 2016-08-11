@@ -14,13 +14,14 @@ static class Main
 	public const string API_TOKEN = "abcd1234";
 
 	public const long YOURCOMPANY_ORGANIZATION_ID = 29958914;
+	public const string TIME_ZONE_NAME = "Eastern Standard Time";
+	public const string SQL_CONNECTION_STRING = "";
+
 	public const long TIME_SPENT_CUSTOM_FIELD_ID = 22682894;
 	public const long CATEGORY_CUSTOM_FIELD_ID = 30240257;
 	public const long ACTION_CUSTOM_FIELD_ID = 22397090;
-
 	public const long CLOSE_CODE_CUSTOM_FIELD_ID = 30242258;
 
-	public const string SQL_CONNECTION_STRING = "";
 	public static int Main(string[] args)
 	{
 		ZendeskTicketCache ZendeskTicketCache = new ZendeskTicketCache(SQL_CONNECTION_STRING);
@@ -135,7 +136,7 @@ static class Main
 
 		private DateTime ConvertDateTime(DateTimeOffset aDateTime)
 		{
-			return TimeZoneInfo.ConvertTimeFromUtc(aDateTime.ToUniversalTime.DateTime, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
+			return TimeZoneInfo.ConvertTimeFromUtc(aDateTime.ToUniversalTime.DateTime, TimeZoneInfo.FindSystemTimeZoneById(TIME_ZONE_NAME));
 		}
 
 		private bool DoesTicketExist(long TicketId)
